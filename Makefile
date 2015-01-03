@@ -33,8 +33,11 @@ endif
 
 .PHONY: build run
 
-build: $(PLEX_BUILD_DEPENDENCIES)
+build: .build
+
+.build: $(PLEX_BUILD_DEPENDENCIES)
 	docker build $(PLEX_BUILD_OPTIONS) $(PLEX_BUILD_DIR)
+	touch .build
 
 run: build
 	docker run $(PLEX_RUN_OPTIONS) $(PLEX_IMAGE)

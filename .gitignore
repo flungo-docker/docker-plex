@@ -1,3 +1,6 @@
-# Created by .gitignore support plugin (hsz.mobi)
+# IntelliJ IDE
 .idea
 *.iml
+
+# Ignore generated files
+.build

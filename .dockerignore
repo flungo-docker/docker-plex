@@ -8,3 +8,9 @@
 # Information files
 LICENSE
 README.md
+
+# Helper files
+Makefile
+
+# Generated files
+.build
