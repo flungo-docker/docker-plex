@@ -19,16 +19,16 @@ override PLEX_DATA:=$(realpath $(PLEX_CONFIG))
 # Build PLEX_RUN_OPTIONS
 override PLEX_RUN_OPTIONS+=--detach
 ifneq ($(PLEX_HOSTNAME),)
-	PLEX_RUN_OPTIONS+=--hostname $(PLEX_HOSTNAME)
+	override PLEX_RUN_OPTIONS+=--hostname $(PLEX_HOSTNAME)
 endif
 ifneq ($(PLEX_CONFIG),)
-	PLEX_RUN_OPTIONS+=--volume $(PLEX_CONFIG):/config
+	override PLEX_RUN_OPTIONS+=--volume $(PLEX_CONFIG):/config
 endif
 ifneq ($(PLEX_DATA),)
-	PLEX_RUN_OPTIONS+=--volume $(PLEX_DATA):/data
+	override PLEX_RUN_OPTIONS+=--volume $(PLEX_DATA):/data
 endif
 ifneq ($(PLEX_BIND),)
-	PLEX_RUN_OPTIONS+=--publish $(PLEX_BIND):32400
+	override PLEX_RUN_OPTIONS+=--publish $(PLEX_BIND):32400
 endif
 
 .PHONY: build run
