@@ -1,0 +1,60 @@
+#!/bin/sh
+
+# Script to create a configure.out file
+
+# Check if OUTPUT has been overriden with CONFIGURATION_OUTPUT
+if [ -n "$CONFIGURATION_OUTPUT" ]; then
+  OUTPUT=$CONFIGURATION_OUTPUT
+else
+  OUTPUT=configure.out
+fi
+
+join() {
+  local IFS="$1"
+  shift
+  echo "$*"
+}
+
+toLower() {
+  echo ${*,,}
+}
+
+# Function to check if item is in array
+containsElementIgnoreCase () {
+  local e
+  local count=0
+  for e in "${@:2}"; do
+    ((count++))
+    [[ $(toLower "$e") == $(toLower "$1") ]] && echo $count && return 0;
+  done
+  return 1
+}
+
+# Function to request input:
+getChoiceInput() {
+  if [[ $# < 3 ]]; then
+    >&2 echo "Failure: getInput() requires 4 parameters"
+  fi
+  local question=$1
+  shift
+  local default=$2
+  shift
+  local options=$*
+
+  local response
+  local prompt="$question [$(join / $options)]: "
+
+  while ! response=$(containsElementIgnoreCase $response $options); do
+    printf "$prompt"
+    read response
+    if [ -z "$response" ]; then
+      echo $default
+      return 0
+    fi
+  done
+
+  echo $response
+  return 0
+}
+
+getChoiceInput "To be or not to be?" 2 Yes No Maybe So
